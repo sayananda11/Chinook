@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<Schema name="fact">
+<!--
+  == This software is subject to the terms of the Eclipse Public License v1.0
+  == Agreement, available at the following URL:
+  == http://www.eclipse.org/legal/epl-v10.html.
+  == You must accept the terms of that agreement to use this software.
+  ==
+  == Copyright (C) 2000-2005 Julian Hyde
+  == Copyright (C) 2005-2011 Pentaho and others
+  == All Rights Reserved.
+  -->
+
+<!-- Shared dimensions -->
+
+  
+
+<!-- Sales -->
+<!-- Sales -->
+<Cube name="Fact" defaultMeasure="Revenue">
+  <Table name="fact_penjualan"/>
+ 
+  <Dimension name="Invoice" foreignKey="sk_invoice">
+    <Hierarchy hasAll="true" allMemberName="All Invoice" primaryKey="sk_invoice">
+      <Table name="dim_invoice" />
+
+      <Level name="Price" column="unit_price"/>
+      <Level name="Quantity" column="quantity"/>
+      <Level name="City" column="billing_city"/>
+      <Level name="Country" column="billing_country"/>
+      <Level name="Track" column="name"/>
+      
+    </Hierarchy>
+  </Dimension>
+
+<Dimension name="Customers" foreignKey="sk_customers">
+    <Hierarchy hasAll="true" allMemberName="All Customers" primaryKey="sk_customers">
+      <Table name="dim_cutomers" />
+
+      <Level name="CustomerName" column="customer_fullname"/>
+      <Level name="CustomerCompany" column="customer_company"/>
+      <Level name="CustomerCity" column="customer_city"/>
+      <Level name="CustomerCountry" column="customer_country"/>
+    </Hierarchy>
+  </Dimension>
+
+<Dimension name="Track" foreignKey="sk_track">
+    <Hierarchy hasAll="true" allMemberName="All Track" primaryKey="sk_track">
+      <Table name="dim_track" />
+
+      <Level name="TrackName" column="track_name"/>
+      <Level name="AlbumTitle" column="album_title"/>
+      <Level name="Artis" column="artist_name"/>
+      <Level name="Genre" column="genre_name"/>
+      <Level name="PlaylistName" column="playlist_name"/>
+      <Level name="UnitPrice" column="unit_price"/>
+    </Hierarchy>
+  </Dimension>
+
+<Dimension name="Date" foreignKey="sk_waktu">
+    <Hierarchy hasAll="true" allMemberName="All Date" primaryKey="sk_waktu">
+      <Table name="dim_date" />
+
+      <Level name="Tanggal" column="deskripsi_tanggal"/>
+    </Hierarchy>
+  </Dimension>
+      
+    
+  <!-- Measures -->
+    <Measure name="TotalPrice" column="unit_price" aggregator="sum" formatString="Standard"/>
+    <Measure name="TotalQuantity" column="quantity" aggregator="sum" formatString="Standard"/>
+    <Measure name="TotalRevenue" column="revenue" aggregator="sum" formatString="Standard"/>
+    <Measure name="TotalHasilPenjualan" column="total" aggregator="sum" formatString="Standard"/>
+  
+</Cube>
+
+
+</Schema>
